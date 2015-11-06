@@ -16,9 +16,11 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
 {
     public partial class Form1 : Form
     {
-        Bitmap gambar_awal, gambar_akhir;
+        Bitmap gambar_awal, gambar_akhir, gambar_tmp;
         Image<Bgr, Byte> gambar_awal_e, gambar_akhir_e;
-        int mode, filter_standar, filter_advanced;
+        int mode, filter_standar, filter_advanced, panjang_kernel;
+        int[,] kernel;
+
 
         public Form1()
         {
@@ -30,6 +32,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             mode = 1;
             filter_standar = -1;
             filter_advanced = -1;
+            panjang_kernel = 0;
 
             radioButton1.Enabled = false;
             radioButton2.Enabled = false;
@@ -50,10 +53,44 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 gambar_awal_e = new Image<Bgr, byte>(pilih_gambar.FileName);
                 gambar_akhir_e = new Image<Bgr, byte>(pilih_gambar.FileName);
 
-                gambar_awal = new Bitmap(new Bitmap(pilih_gambar.FileName)); //gambar patokan pengolahan
-                gambar_akhir = new Bitmap(new Bitmap(pilih_gambar.FileName)); //gambar sebelum diedit
+                gambar_tmp = new Bitmap(new Bitmap(pilih_gambar.FileName));
+                gambar_awal = new Bitmap(gambar_tmp.Width + 2, gambar_tmp.Height + 2);
+                gambar_akhir = new Bitmap(new Bitmap(pilih_gambar.FileName));
 
-                pictureBox1.Image = gambar_awal;
+                int r, g, b;
+
+                for (int i = 0; i < gambar_awal.Width; i++)
+                {
+                    for (int j = 0; j < gambar_awal.Height; j++)
+                    {
+                        if(i==0)//pemberian nilai 0
+                        {
+                            gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                        }
+                        else if(j==0) //pemberian nilai 0
+                        {
+                            gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                        }
+                        else if(j==gambar_awal.Height-1)
+                        {
+                            gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                        }
+                        else if (i == gambar_awal.Width - 1)
+                        {
+                            gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                        }
+                        else
+                        {
+                            r = gambar_tmp.GetPixel(i - 1, j - 1).R;
+                            g = gambar_tmp.GetPixel(i - 1, j - 1).G;
+                            b = gambar_tmp.GetPixel(i - 1, j - 1).B;
+
+                            gambar_awal.SetPixel(i, j, Color.FromArgb(r, g, b));
+                        }
+                    }
+                }
+                
+                pictureBox1.Image = gambar_tmp;
             }
         }
 
@@ -218,6 +255,250 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_batas_primitif()
         {
             //kodene...
+            int[] nilai_mak = new int[3];
+            int[] nilai_min = new int[3];
+            int r, g, b;
+            for(int i=1;i<gambar_awal.Width-1;i++)
+            {
+                for(int j=1;j<gambar_awal.Height-1;j++)
+                {
+                    nilai_mak[0] = cari_nilai_mak(i, j, "red");
+                    nilai_mak[1] = cari_nilai_mak(i, j, "green");
+                    nilai_mak[2] = cari_nilai_mak(i, j, "blue");
+
+                    nilai_min[0] = cari_nilai_min(i, j, "red");
+                    nilai_min[1] = cari_nilai_min(i, j, "green");
+                    nilai_min[2] = cari_nilai_min(i, j, "blue");
+
+                    if ((gambar_awal.GetPixel(i, j).R) < nilai_min[0])
+                        r = nilai_min[0];
+                    else if ((gambar_awal.GetPixel(i, j).R) > nilai_mak[0])
+                        r = nilai_mak[0];
+                    else
+                        r = gambar_awal.GetPixel(i, j).R;
+
+                    if ((gambar_awal.GetPixel(i, j).G) < nilai_min[1])
+                        g = nilai_min[1];
+                    else if ((gambar_awal.GetPixel(i, j).G) > nilai_mak[1])
+                        g = nilai_mak[1];
+                    else
+                        g = gambar_awal.GetPixel(i, j).G;
+
+                    if ((gambar_awal.GetPixel(i, j).B) < nilai_min[2])
+                        b = nilai_min[2];
+                    else if ((gambar_awal.GetPixel(i, j).B) > nilai_mak[2])
+                        b = nilai_mak[2];
+                    else
+                        b = gambar_awal.GetPixel(i, j).B;
+
+                    gambar_akhir.SetPixel(i-1, j-1, Color.FromArgb(r, g, b));                 
+                }
+            }
+            pictureBox2.Image = (Bitmap)gambar_akhir;
+        }
+
+        private int cari_nilai_mak(int i, int j, string RGB)
+        {
+            int hasil=-1;
+            if(RGB=="red")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j+1).R;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j + 1).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).R;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j).R;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).R;
+
+                    if (hasil < gambar_awal.GetPixel(i, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i, j - 1).R;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).R;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j).R;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j + 1).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).R;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            else if(RGB=="green")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j + 1).G;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j + 1).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).G;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j).G;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).G;
+
+                    if (hasil < gambar_awal.GetPixel(i, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i, j - 1).G;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).G;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j).G;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j + 1).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).G;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            else if(RGB=="blue")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j + 1).B;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j + 1).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).B;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j).B;
+
+                    if (hasil < gambar_awal.GetPixel(i - 1, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).B;
+
+                    if (hasil < gambar_awal.GetPixel(i, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i, j - 1).B;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).B;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j).B;
+
+                    if (hasil < gambar_awal.GetPixel(i + 1, j + 1).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).B;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            return hasil;
+        }
+
+        private int cari_nilai_min(int i, int j, string RGB)
+        {
+            int hasil = -1;
+            if (RGB == "red")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j + 1).R;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j + 1).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).R;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j).R;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).R;
+
+                    if (hasil > gambar_awal.GetPixel(i, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i, j - 1).R;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j - 1).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).R;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j).R;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j + 1).R)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).R;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            else if (RGB == "green")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j + 1).G;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j + 1).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).G;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j).G;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).G;
+
+                    if (hasil > gambar_awal.GetPixel(i, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i, j - 1).G;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j - 1).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).G;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j).G;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j + 1).G)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).G;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            else if (RGB == "blue")
+            {
+                try
+                {
+                    hasil = gambar_awal.GetPixel(i, j + 1).B;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j + 1).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j + 1).B;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j).B;
+
+                    if (hasil > gambar_awal.GetPixel(i - 1, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i - 1, j - 1).B;
+
+                    if (hasil > gambar_awal.GetPixel(i, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i, j - 1).B;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j - 1).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j - 1).B;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j).B;
+
+                    if (hasil > gambar_awal.GetPixel(i + 1, j + 1).B)
+                        hasil = gambar_awal.GetPixel(i + 1, j + 1).B;
+                }
+                catch
+                {
+                    hasil = -1;
+                }
+            }
+            return hasil;
         }
 
         private void filter_pererataan_primitif()
@@ -243,6 +524,60 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_median_emgu()
         {
             //kodene...
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView1.Rows.Clear();
+                dataGridView1.Refresh();
+
+                int panjang;
+                double tmp;
+
+                panjang_kernel = Convert.ToInt16(textBox1.Text);
+                tmp = Math.Floor(dataGridView1.Width / Convert.ToDouble(textBox1.Text));
+                panjang = (int)tmp;
+                dataGridView1.ColumnCount = panjang_kernel;
+
+                for (int i = 0; i < panjang_kernel; i++)
+                {
+                    var baris = new DataGridViewRow();
+                    DataGridViewColumn kolom = dataGridView1.Columns[i];
+                    kolom.Width = panjang;
+                    dataGridView1.Rows.Add(baris);
+                }
+                dataGridView1.AllowUserToAddRows = false;
+                dataGridView1.AllowUserToResizeRows = false;
+                dataGridView1.AllowUserToResizeColumns = false;
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                kernel = new int[panjang_kernel, panjang_kernel];
+
+                for(int i=0;i<panjang_kernel;i++)
+                {
+                    for (int j = 0; j < panjang_kernel; j++)
+                    {
+                        kernel[i, j] = Convert.ToInt16(dataGridView1.Rows[i].Cells[j].Value);
+                        MessageBox.Show(Convert.ToString(kernel[i, j]));
+                    }
+                }
+                MessageBox.Show("Data BERHASIL berhasil dimasukkan !");
+            }
+            catch
+            {
+                MessageBox.Show("Data TIDAK berhasil dimasukkan !");
+            }
         }        
     }
 }
