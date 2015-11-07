@@ -250,6 +250,10 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 {
                     filter_median_primitif();
                 }
+                else if(filter_advanced==1)
+                {
+                    low_pass_filter();
+                }
             }
             else if(mode==2)
             {
@@ -677,6 +681,48 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_median_emgu()
         {
             //kodene...
+        }
+
+        private void low_pass_filter()
+        {
+            gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
+            Color warna;
+            int R, G, B, totalR = 0, totalG = 0, totalB = 0;
+            for (int i = 1; i < gambar_awal.Width - 1; i++)
+            {
+                for (int j = 1; j < gambar_awal.Height - 1; j++)
+                {
+                    for (int x = -1, k = 0; x < (int)numericUpDown1.Value - 1; x++, k++)
+                    {
+                        for (int y = -1, l = 0; y < (int)numericUpDown1.Value - 1; y++, l++)
+                        {
+                            warna = gambar_awal.GetPixel(i + x, j + y);
+                            R = warna.R;
+                            G = warna.G;
+                            B = warna.B;
+
+                            totalR += (kernel[k, l] * R);
+                            totalG += (kernel[k, l] * G);
+                            totalB += (kernel[k, l] * B);
+                        }
+                    }
+                    if (totalR > 255)
+                        totalR = 255;
+                    else if (totalR < 0)
+                        totalR = 0;
+                    if (totalG > 255)
+                        totalG = 255;
+                    else if (totalG < 0)
+                        totalG = 0;
+                    if (totalB > 255)
+                        totalB = 255;
+                    else if (totalB < 0)
+                        totalB = 0;
+
+                    gambar_akhir.SetPixel(i, j, Color.FromArgb(totalR, totalG, totalB));
+                }
+            }
+            pictureBox2.Image = gambar_akhir;
         }
 
         private void button5_Click(object sender, EventArgs e)
