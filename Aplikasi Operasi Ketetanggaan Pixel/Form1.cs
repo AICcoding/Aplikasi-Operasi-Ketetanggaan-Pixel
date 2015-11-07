@@ -18,9 +18,8 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
     {
         Bitmap gambar_awal, gambar_akhir, gambar_tmp;
         Image<Bgr, Byte> gambar_awal_e, gambar_akhir_e;
-        int mode, filter_standar, filter_advanced, panjang_kernel;
+        int mode, filter_standar, filter_advanced, panjang_kernel, skala_pembesaran;
         int[,] kernel;
-
 
         public Form1()
         {
@@ -42,10 +41,19 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             radioButton6.Enabled = false;
             radioButton7.Enabled = false;
             radioButton8.Enabled = false;
+
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            skala_pembesaran = 1000;
+            textBox1.Text = "1000";
+            trackBar3.Value = 1000;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
+
             OpenFileDialog pilih_gambar = new OpenFileDialog();
             pilih_gambar.Filter = "File gambar (*.BMP; *.JPG; *.PNG)|*.BMP; *.JPG; *.PNG";
             if (pilih_gambar.ShowDialog() == DialogResult.OK)
@@ -89,9 +97,17 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                         }
                     }
                 }
-                
+
+
+                pictureBox1.Size = new Size(gambar_tmp.Width, gambar_tmp.Height);
+                pictureBox2.Size = new Size(gambar_akhir.Width, gambar_akhir.Height);
+
                 pictureBox1.Image = gambar_tmp;
-                pictureBox2.Image = gambar_awal;
+                pictureBox2.Image = gambar_akhir;
+
+                trackBar1.Value = 1;
+                trackBar2.Value = 1;
+
             }
         }
 
@@ -714,6 +730,68 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             {
                 MessageBox.Show("Data TIDAK berhasil dimasukkan !");
             }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox1.Width = gambar_tmp.Width;
+                pictureBox1.Height = gambar_tmp.Height;
+
+                pictureBox1.Width += (Convert.ToInt16(trackBar1.Value) * pictureBox1.Width) / skala_pembesaran;
+                pictureBox1.Height += (Convert.ToInt16(trackBar1.Value) * pictureBox1.Height) / skala_pembesaran;
+            }
+            catch
+            {
+
+            }          
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox2.Width = gambar_akhir.Width;
+                pictureBox2.Height = gambar_akhir.Height;
+
+                pictureBox2.Width += (Convert.ToInt16(trackBar2.Value) * pictureBox2.Width) / skala_pembesaran;
+                pictureBox2.Height += (Convert.ToInt16(trackBar2.Value) * pictureBox2.Height) / skala_pembesaran;
+            }
+            catch
+            {
+
+            }           
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("* Rasio pembesaran gambar merupakan rasio\n   pembesaran width dan height pada gambar.\n\n* Semakin tinggi rasio maka pembesaran\n   gambar ketika di scroll menjadi melambat.\n\n* Begitu juga sebaliknya\n\n* Skala pembesaran dari 1 sampai 10.000",
+                                  "Rasio Pembesaran Gambar", MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information,
+                                  0);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Dibuat Oleh :\n1. I Putu Agus Suarya W.\n[1308605034]",
+                                  "Tentang Kami", MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information,
+                                  0);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            skala_pembesaran = trackBar3.Value;
+            MessageBox.Show("Skala pembesaran disimpan !",
+                                  "Berhasil", MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information,
+                                  0);
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            textBox1.Text = Convert.ToString(trackBar3.Value);
         }        
     }
 }

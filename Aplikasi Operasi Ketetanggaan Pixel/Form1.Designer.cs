@@ -54,17 +54,28 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button5 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.trackBar3 = new System.Windows.Forms.TrackBar();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -74,15 +85,22 @@
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox7.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -106,6 +124,7 @@
             this.button4.TabIndex = 16;
             this.button4.Text = "Tentang Kami";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -166,6 +185,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(7, 114);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -372,6 +392,29 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Kernel";
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(12, 46);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.ReadOnly = true;
+            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown1.TabIndex = 13;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(87, 46);
@@ -401,6 +444,79 @@
             this.dataGridView1.Size = new System.Drawing.Size(182, 182);
             this.dataGridView1.TabIndex = 0;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox11);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(206, 353);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Pengaturan lain";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.trackBar3);
+            this.groupBox11.Controls.Add(this.button7);
+            this.groupBox11.Controls.Add(this.label2);
+            this.groupBox11.Controls.Add(this.textBox1);
+            this.groupBox11.Controls.Add(this.button6);
+            this.groupBox11.Location = new System.Drawing.Point(3, 17);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(200, 162);
+            this.groupBox11.TabIndex = 3;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Rasio pembesaran gambar";
+            // 
+            // trackBar3
+            // 
+            this.trackBar3.BackColor = System.Drawing.Color.White;
+            this.trackBar3.Location = new System.Drawing.Point(3, 28);
+            this.trackBar3.Maximum = 10000;
+            this.trackBar3.Minimum = 1;
+            this.trackBar3.Name = "trackBar3";
+            this.trackBar3.Size = new System.Drawing.Size(194, 45);
+            this.trackBar3.TabIndex = 4;
+            this.trackBar3.Value = 1;
+            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(31, 121);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(59, 26);
+            this.button7.TabIndex = 3;
+            this.button7.Text = "Bantuan";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Rasio";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(59, 82);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(82, 20);
+            this.textBox1.TabIndex = 0;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(97, 121);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(69, 26);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Simpan";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
@@ -423,6 +539,7 @@
             this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox8.Controls.Add(this.groupBox10);
             this.groupBox8.Controls.Add(this.panel2);
             this.groupBox8.Location = new System.Drawing.Point(443, 3);
             this.groupBox8.Name = "groupBox8";
@@ -431,6 +548,31 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Gambar akhir";
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox10.Controls.Add(this.trackBar2);
+            this.groupBox10.Location = new System.Drawing.Point(6, 19);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(192, 75);
+            this.groupBox10.TabIndex = 14;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Ubah ukuran gambar akhir";
+            // 
+            // trackBar2
+            // 
+            this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar2.Location = new System.Drawing.Point(7, 19);
+            this.trackBar2.Maximum = 10000;
+            this.trackBar2.Minimum = 1;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(178, 45);
+            this.trackBar2.TabIndex = 12;
+            this.trackBar2.Value = 1;
+            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -438,9 +580,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.pictureBox2);
-            this.panel2.Location = new System.Drawing.Point(15, 29);
+            this.panel2.Location = new System.Drawing.Point(6, 106);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(173, 488);
+            this.panel2.Size = new System.Drawing.Size(192, 411);
             this.panel2.TabIndex = 11;
             // 
             // pictureBox2
@@ -448,7 +590,7 @@
             this.pictureBox2.Location = new System.Drawing.Point(3, 3);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
@@ -457,6 +599,7 @@
             this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox7.Controls.Add(this.groupBox9);
             this.groupBox7.Controls.Add(this.panel1);
             this.groupBox7.Location = new System.Drawing.Point(233, 3);
             this.groupBox7.Name = "groupBox7";
@@ -465,6 +608,31 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Gambar awal";
             // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox9.Controls.Add(this.trackBar1);
+            this.groupBox9.Location = new System.Drawing.Point(6, 19);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(192, 75);
+            this.groupBox9.TabIndex = 13;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Ubah ukuran gambar awal";
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.Location = new System.Drawing.Point(7, 19);
+            this.trackBar1.Maximum = 10000;
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(178, 45);
+            this.trackBar1.TabIndex = 12;
+            this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -472,9 +640,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(15, 29);
+            this.panel1.Location = new System.Drawing.Point(6, 106);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(173, 488);
+            this.panel1.Size = new System.Drawing.Size(192, 411);
             this.panel1.TabIndex = 11;
             // 
             // pictureBox1
@@ -482,32 +650,9 @@
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Location = new System.Drawing.Point(12, 46);
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.ReadOnly = true;
-            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDown1.TabIndex = 13;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
             // 
             // Form1
             // 
@@ -532,17 +677,25 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox7.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -585,6 +738,17 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TrackBar trackBar3;
     }
 }
 
