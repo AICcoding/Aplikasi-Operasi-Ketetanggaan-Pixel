@@ -56,7 +56,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -65,6 +64,7 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -82,6 +82,7 @@
             this.groupBox7.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -360,9 +361,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Location = new System.Drawing.Point(7, 20);
             this.groupBox2.Name = "groupBox2";
@@ -373,9 +374,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(65, 46);
+            this.button5.Location = new System.Drawing.Point(87, 46);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(75, 20);
             this.button5.TabIndex = 3;
             this.button5.Text = "OK";
             this.button5.UseVisualStyleBackColor = true;
@@ -389,13 +390,6 @@
             this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Ukuran :";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(10, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(49, 20);
-            this.textBox1.TabIndex = 1;
             // 
             // dataGridView1
             // 
@@ -492,6 +486,29 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(12, 46);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.ReadOnly = true;
+            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown1.TabIndex = 13;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -525,6 +542,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -566,9 +584,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-
-
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

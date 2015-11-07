@@ -54,7 +54,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 gambar_akhir_e = new Image<Bgr, byte>(pilih_gambar.FileName);
 
                 gambar_tmp = new Bitmap(new Bitmap(pilih_gambar.FileName));
-                gambar_awal = new Bitmap(gambar_tmp.Width + 2, gambar_tmp.Height + 2);
+                gambar_awal = new Bitmap(gambar_tmp.Width + ((int)numericUpDown1.Value - 1), gambar_tmp.Height + ((int)numericUpDown1.Value - 1));
                 gambar_akhir = new Bitmap(new Bitmap(pilih_gambar.FileName));
 
                 int r, g, b;
@@ -63,27 +63,27 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 {
                     for (int j = 0; j < gambar_awal.Height; j++)
                     {
-                        if(i==0)//pemberian nilai 0
+                        if(i < (((int)numericUpDown1.Value - 1) / 2))//pemberian nilai 0
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if(j==0) //pemberian nilai 0
+                        else if(j < (((int)numericUpDown1.Value - 1) / 2)) //pemberian nilai 0
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if(j==gambar_awal.Height-1)
+                        else if(j >= (gambar_awal.Height - (((int)numericUpDown1.Value - 1) / 2)))
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if (i == gambar_awal.Width - 1)
+                        else if (i >= (gambar_awal.Width - (((int)numericUpDown1.Value - 1) / 2)))
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
                         else
                         {
-                            r = gambar_tmp.GetPixel(i - 1, j - 1).R;
-                            g = gambar_tmp.GetPixel(i - 1, j - 1).G;
-                            b = gambar_tmp.GetPixel(i - 1, j - 1).B;
+                            r = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).R;
+                            g = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).G;
+                            b = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).B;
 
                             gambar_awal.SetPixel(i, j, Color.FromArgb(r, g, b));
                         }
@@ -91,6 +91,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 }
                 
                 pictureBox1.Image = gambar_tmp;
+                pictureBox2.Image = gambar_awal;
             }
         }
 
@@ -583,11 +584,10 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 dataGridView1.Refresh();
 
                 int panjang;
-                double tmp;
+                //double tmp;
 
-                panjang_kernel = Convert.ToInt16(textBox1.Text);
-                tmp = Math.Floor(dataGridView1.Width / Convert.ToDouble(textBox1.Text));
-                panjang = (int)tmp;
+                panjang_kernel = (int)numericUpDown1.Value;
+                panjang = dataGridView1.Width / (int)numericUpDown1.Value;
                 dataGridView1.ColumnCount = panjang_kernel;
 
                 for (int i = 0; i < panjang_kernel; i++)
