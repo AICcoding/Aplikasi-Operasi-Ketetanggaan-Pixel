@@ -62,7 +62,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 gambar_akhir_e = new Image<Bgr, byte>(pilih_gambar.FileName);
 
                 gambar_tmp = new Bitmap(new Bitmap(pilih_gambar.FileName));
-                gambar_awal = new Bitmap(gambar_tmp.Width + ((int)numericUpDown1.Value - 1), gambar_tmp.Height + ((int)numericUpDown1.Value - 1));
+                gambar_awal = new Bitmap(gambar_tmp.Width + (panjang_kernel - 1), gambar_tmp.Height + (panjang_kernel - 1));
                 gambar_akhir = new Bitmap(new Bitmap(pilih_gambar.FileName));
 
                 int r, g, b;
@@ -71,27 +71,27 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 {
                     for (int j = 0; j < gambar_awal.Height; j++)
                     {
-                        if(i < (((int)numericUpDown1.Value - 1) / 2))//pemberian nilai 0
+                        if(i < ((panjang_kernel - 1) / 2))//pemberian nilai 0
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if(j < (((int)numericUpDown1.Value - 1) / 2)) //pemberian nilai 0
+                        else if(j < ((panjang_kernel - 1) / 2)) //pemberian nilai 0
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if(j >= (gambar_awal.Height - (((int)numericUpDown1.Value - 1) / 2)))
+                        else if(j >= (gambar_awal.Height - ((panjang_kernel - 1) / 2)))
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
-                        else if (i >= (gambar_awal.Width - (((int)numericUpDown1.Value - 1) / 2)))
+                        else if (i >= (gambar_awal.Width - ((panjang_kernel - 1) / 2)))
                         {
                             gambar_awal.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                         }
                         else
                         {
-                            r = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).R;
-                            g = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).G;
-                            b = gambar_tmp.GetPixel(i - (((int)numericUpDown1.Value - 1) / 2), j - (((int)numericUpDown1.Value - 1) / 2)).B;
+                            r = gambar_tmp.GetPixel(i - ((panjang_kernel - 1) / 2), j - ((panjang_kernel - 1) / 2)).R;
+                            g = gambar_tmp.GetPixel(i - ((panjang_kernel - 1) / 2), j - ((panjang_kernel - 1) / 2)).G;
+                            b = gambar_tmp.GetPixel(i - ((panjang_kernel - 1) / 2), j - ((panjang_kernel - 1) / 2)).B;
 
                             gambar_awal.SetPixel(i, j, Color.FromArgb(r, g, b));
                         }
@@ -252,7 +252,15 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 }
                 else if(filter_advanced==1)
                 {
-                    low_pass_filter();
+                    low_pass_filter_primitif();
+                }
+                else if(filter_advanced==2)
+                {
+                    high_pass_filter_primitif();
+                }
+                else if (filter_advanced==3)
+                {
+                    high_boost_filter_primitif();
                 }
             }
             else if(mode==2)
@@ -683,21 +691,30 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             //kodene...
         }
 
-        private void low_pass_filter()
+        private void low_pass_filter_primitif()
         {
+            int sum_matrik = 0; //jumlahkan semua kernel
+            for(int i = 0; i < panjang_kernel; i++)
+            {
+                for(int j = 0; j < panjang_kernel; j++)
+                {
+                    sum_matrik += kernel[i, j];
+                }
+            }
+
             gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
             Color warna;
             int R, G, B, totalR, totalG, totalB;
-            for (int i = 1; i < gambar_awal.Width - 1; i++)
+            for (int i = ((panjang_kernel - 1) / 2); i < gambar_awal.Width - ((panjang_kernel - 1) / 2); i++)
             {
-                for (int j = 1; j < gambar_awal.Height - 1; j++)
+                for (int j = ((panjang_kernel - 1) / 2); j < gambar_awal.Height - ((panjang_kernel - 1) / 2); j++)
                 {
                     totalR = 0;
                     totalG = 0;
                     totalB = 0;
-                    for (int x = -1, k = 0; x < (int)numericUpDown1.Value - 1; x++, k++)
+                    for (int x = -1, k = 0; x < panjang_kernel - 1; x++, k++)
                     {
-                        for (int y = -1, l = 0; y < (int)numericUpDown1.Value - 1; y++, l++)
+                        for (int y = -1, l = 0; y < panjang_kernel - 1; y++, l++)
                         {
                             warna = gambar_awal.GetPixel(i + x, j + y);
                             R = warna.R;
@@ -709,6 +726,103 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                             totalB += (kernel[k, l] * B);
                         }
                     }
+
+                    totalR /= sum_matrik;
+                    totalG /= sum_matrik;
+                    totalB /= sum_matrik;
+
+                    /*if (totalR > 255)
+                        totalR = 255;
+                    else if (totalR < 0)
+                        totalR = 0;
+                    if (totalG > 255)
+                        totalG = 255;
+                    else if (totalG < 0)
+                        totalG = 0;
+                    if (totalB > 255)
+                        totalB = 255;
+                    else if (totalB < 0)
+                        totalB = 0;*/
+
+                    gambar_akhir.SetPixel(i, j, Color.FromArgb(totalR, totalG, totalB));
+                }
+            }
+            pictureBox2.Image = gambar_akhir;
+        }
+
+        private void high_pass_filter_primitif()
+        {
+            gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
+            Color warna;
+            int R, G, B, totalR, totalG, totalB;
+            for (int i = ((panjang_kernel - 1) / 2); i < gambar_awal.Width - ((panjang_kernel - 1) / 2); i++)
+            {
+                for (int j = ((panjang_kernel - 1) / 2); j < gambar_awal.Height - ((panjang_kernel - 1) / 2); j++)
+                {
+                    totalR = 0;
+                    totalG = 0;
+                    totalB = 0;
+                    for (int x = -1, k = 0; x < panjang_kernel - 1; x++, k++)
+                    {
+                        for (int y = -1, l = 0; y < panjang_kernel - 1; y++, l++)
+                        {
+                            warna = gambar_awal.GetPixel(i + x, j + y);
+                            R = warna.R;
+                            G = warna.G;
+                            B = warna.B;
+
+                            totalR += (kernel[k, l] * R);
+                            totalG += (kernel[k, l] * G);
+                            totalB += (kernel[k, l] * B);
+                        }
+                    }
+
+                    if (totalR > 255)
+                        totalR = 255;
+                    else if (totalR < 0)
+                        totalR = 0;
+                    if (totalG > 255)
+                        totalG = 255;
+                    else if (totalG < 0)
+                        totalG = 0;
+                    if (totalB > 255)
+                        totalB = 255;
+                    else if (totalB < 0)
+                        totalB = 0;
+
+                    gambar_akhir.SetPixel(i, j, Color.FromArgb(totalR, totalG, totalB));
+                }
+            }
+            pictureBox2.Image = gambar_akhir;
+        }
+
+        private void high_boost_filter_primitif()
+        {
+            gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
+            Color warna;
+            int R, G, B, totalR, totalG, totalB;
+            for (int i = ((panjang_kernel - 1) / 2); i < gambar_awal.Width - ((panjang_kernel - 1) / 2); i++)
+            {
+                for (int j = ((panjang_kernel - 1) / 2); j < gambar_awal.Height - ((panjang_kernel - 1) / 2); j++)
+                {
+                    totalR = 0;
+                    totalG = 0;
+                    totalB = 0;
+                    for (int x = -1, k = 0; x < panjang_kernel - 1; x++, k++)
+                    {
+                        for (int y = -1, l = 0; y < panjang_kernel - 1; y++, l++)
+                        {
+                            warna = gambar_awal.GetPixel(i + x, j + y);
+                            R = warna.R;
+                            G = warna.G;
+                            B = warna.B;
+
+                            totalR += (kernel[k, l] * R);
+                            totalG += (kernel[k, l] * G);
+                            totalB += (kernel[k, l] * B);
+                        }
+                    }
+
                     if (totalR > 255)
                         totalR = 255;
                     else if (totalR < 0)
@@ -739,7 +853,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 //double tmp;
 
                 panjang_kernel = (int)numericUpDown1.Value;
-                panjang = dataGridView1.Width / (int)numericUpDown1.Value;
+                panjang = dataGridView1.Width / panjang_kernel;
                 dataGridView1.ColumnCount = panjang_kernel;
 
                 for (int i = 0; i < panjang_kernel; i++)
@@ -770,7 +884,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                     for (int j = 0; j < panjang_kernel; j++)
                     {
                         kernel[i, j] = Convert.ToInt16(dataGridView1.Rows[i].Cells[j].Value);
-                        MessageBox.Show(Convert.ToString(kernel[i, j]));
+                        //MessageBox.Show(Convert.ToString(kernel[i, j]));
                     }
                 }
                 MessageBox.Show("Data BERHASIL berhasil dimasukkan !");
@@ -823,7 +937,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Dibuat Oleh :\n1. I Putu Agus Suarya W.\n[1308605034]",
+            MessageBox.Show("Dibuat Oleh :\n1. I Putu Agus Suarya W.\t[1308605034]\n2.I Wayan Ariantha Sentanu\t[1308605009]",
                                   "Tentang Kami", MessageBoxButtons.OK,
                                   MessageBoxIcon.Information,
                                   0);
