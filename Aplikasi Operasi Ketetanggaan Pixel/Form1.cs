@@ -558,56 +558,6 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_median_primitif()
         {
             //kodene...
-            int[] nilai_total = new int[3];
-            int r, g, b;
-            double tmp;
-            for (int i = 1; i < gambar_awal.Width - 1; i++)
-            {
-                for (int j = 1; j < gambar_awal.Height - 1; j++)
-                {
-                    nilai_total[0] = 0;
-                    nilai_total[0] += gambar_awal.GetPixel(i, j + 1).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i - 1, j + 1).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i - 1, j).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i - 1, j - 1).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i, j - 1).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i + 1, j - 1).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i + 1, j).R;
-                    nilai_total[0] += gambar_awal.GetPixel(i + 1, j + 1).R;
-
-                    nilai_total[1] = 0;
-                    nilai_total[1] += gambar_awal.GetPixel(i, j + 1).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i - 1, j + 1).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i - 1, j).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i - 1, j - 1).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i, j - 1).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i + 1, j - 1).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i + 1, j).G;
-                    nilai_total[1] += gambar_awal.GetPixel(i + 1, j + 1).G;
-
-                    nilai_total[2] = 0;
-                    nilai_total[2] += gambar_awal.GetPixel(i, j + 1).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i - 1, j + 1).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i - 1, j).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i - 1, j - 1).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i, j - 1).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i + 1, j - 1).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i + 1, j).B;
-                    nilai_total[2] += gambar_awal.GetPixel(i + 1, j + 1).B;
-
-                    tmp = Math.Round(nilai_total[0] / 9F);
-                    r = Convert.ToInt16(tmp);
-
-                    tmp = Math.Round(nilai_total[1] / 9F);
-                    g = Convert.ToInt16(tmp);
-
-                    tmp = Math.Round(nilai_total[2] / 9F);
-                    b = Convert.ToInt16(tmp);
-
-                    gambar_akhir.SetPixel(i - 1, j - 1, Color.FromArgb(r, g, b));
-                }
-            }
-            pictureBox2.Image = (Bitmap)gambar_akhir;
         }
 
         private void filter_batas_emgu()
