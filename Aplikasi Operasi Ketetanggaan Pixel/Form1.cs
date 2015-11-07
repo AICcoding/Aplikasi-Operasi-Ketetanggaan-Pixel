@@ -257,10 +257,13 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             //kodene...
             int[] nilai_mak = new int[3];
             int[] nilai_min = new int[3];
-            int r, g, b;
-            for(int i=1;i<gambar_awal.Width-1;i++)
+            int r, g, b, nilai_batas;
+
+            nilai_batas = Convert.ToInt16(numericUpDown1.Value);
+            nilai_batas = (nilai_batas - 1) / 2;
+            for (int i = nilai_batas; i < gambar_awal.Width - nilai_batas; i++)
             {
-                for(int j=1;j<gambar_awal.Height-1;j++)
+                for (int j = nilai_batas; j < gambar_awal.Height - nilai_batas; j++)
                 {
                     nilai_mak[0] = cari_nilai_mak(i, j, "red");
                     nilai_mak[1] = cari_nilai_mak(i, j, "green");
@@ -291,7 +294,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                     else
                         b = gambar_awal.GetPixel(i, j).B;
 
-                    gambar_akhir.SetPixel(i-1, j-1, Color.FromArgb(r, g, b));                 
+                    gambar_akhir.SetPixel(i - nilai_batas, j - nilai_batas, Color.FromArgb(r, g, b));                 
                 }
             }
             pictureBox2.Image = (Bitmap)gambar_akhir;
@@ -505,11 +508,15 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         {
             //kodene...
             int[] nilai_total = new int[3];
-            int r, g, b;
+            int r, g, b,nilai_batas;
             double tmp;
-            for (int i = 1; i < gambar_awal.Width - 1; i++)
+
+            nilai_batas = Convert.ToInt16(numericUpDown1.Value);
+            nilai_batas = (nilai_batas - 1) / 2;
+
+            for (int i = nilai_batas; i < gambar_awal.Width - nilai_batas; i++)
             {
-                for (int j = 1; j < gambar_awal.Height - 1; j++)
+                for (int j = nilai_batas; j < gambar_awal.Height - nilai_batas; j++)
                 {
                     nilai_total[0] = 0;
                     nilai_total[0] += gambar_awal.GetPixel(i, j + 1).R;
@@ -550,7 +557,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                     tmp = Math.Round(nilai_total[2] / 9F);
                     b = Convert.ToInt16(tmp);
 
-                    gambar_akhir.SetPixel(i - 1, j - 1, Color.FromArgb(r, g, b));
+                    gambar_akhir.SetPixel(i - nilai_batas, j - nilai_batas, Color.FromArgb(r, g, b));
                 }
             }
             pictureBox2.Image = (Bitmap)gambar_akhir;
@@ -559,16 +566,20 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_median_primitif()
         {
             //kodene...
-            int r, g, b;
-            for (int i = 1; i < gambar_awal.Width - 1; i++)
+            int r, g, b,nilai_batas;
+
+            nilai_batas = Convert.ToInt16(numericUpDown1.Value);
+            nilai_batas = (nilai_batas - 1) / 2;
+
+            for (int i = nilai_batas; i < gambar_awal.Width - nilai_batas; i++)
             {
-                for (int j = 1; j < gambar_awal.Height - 1; j++)
+                for (int j = nilai_batas; j < gambar_awal.Height - nilai_batas; j++)
                 {
                     r = cari_median(i, j, "red");
                     g = cari_median(i, j, "green");
                     b = cari_median(i, j, "blue");
 
-                    gambar_akhir.SetPixel(i - 1, j - 1, Color.FromArgb(r, g, b));
+                    gambar_akhir.SetPixel(i - nilai_batas, j - nilai_batas, Color.FromArgb(r, g, b));
                 }
             }
             pictureBox2.Image = (Bitmap)gambar_akhir;
