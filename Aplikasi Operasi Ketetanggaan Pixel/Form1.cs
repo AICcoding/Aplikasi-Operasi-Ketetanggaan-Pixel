@@ -687,11 +687,14 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         {
             gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
             Color warna;
-            int R, G, B, totalR = 0, totalG = 0, totalB = 0;
+            int R, G, B, totalR, totalG, totalB;
             for (int i = 1; i < gambar_awal.Width - 1; i++)
             {
                 for (int j = 1; j < gambar_awal.Height - 1; j++)
                 {
+                    totalR = 0;
+                    totalG = 0;
+                    totalB = 0;
                     for (int x = -1, k = 0; x < (int)numericUpDown1.Value - 1; x++, k++)
                     {
                         for (int y = -1, l = 0; y < (int)numericUpDown1.Value - 1; y++, l++)
