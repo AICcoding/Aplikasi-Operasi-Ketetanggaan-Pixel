@@ -702,52 +702,59 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
                 }
             }
 
-            gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
-            Color warna;
-            int R, G, B, totalR, totalG, totalB;
-            for (int i = ((panjang_kernel - 1) / 2); i < gambar_awal.Width - ((panjang_kernel - 1) / 2); i++)
+            if (sum_matrik != 0)
             {
-                for (int j = ((panjang_kernel - 1) / 2); j < gambar_awal.Height - ((panjang_kernel - 1) / 2); j++)
+                gambar_akhir = new Bitmap(gambar_awal.Width, gambar_awal.Height);
+                Color warna;
+                int R, G, B, totalR, totalG, totalB;
+                for (int i = ((panjang_kernel - 1) / 2); i < gambar_awal.Width - ((panjang_kernel - 1) / 2); i++)
                 {
-                    totalR = 0;
-                    totalG = 0;
-                    totalB = 0;
-                    for (int x = -1, k = 0; x < panjang_kernel - 1; x++, k++)
+                    for (int j = ((panjang_kernel - 1) / 2); j < gambar_awal.Height - ((panjang_kernel - 1) / 2); j++)
                     {
-                        for (int y = -1, l = 0; y < panjang_kernel - 1; y++, l++)
-                        {
-                            warna = gambar_awal.GetPixel(i + x, j + y);
-                            R = warna.R;
-                            G = warna.G;
-                            B = warna.B;
-
-                            totalR += (kernel[k, l] * R);
-                            totalG += (kernel[k, l] * G);
-                            totalB += (kernel[k, l] * B);
-                        }
-                    }
-
-                    totalR /= sum_matrik;
-                    totalG /= sum_matrik;
-                    totalB /= sum_matrik;
-
-                    /*if (totalR > 255)
-                        totalR = 255;
-                    else if (totalR < 0)
                         totalR = 0;
-                    if (totalG > 255)
-                        totalG = 255;
-                    else if (totalG < 0)
                         totalG = 0;
-                    if (totalB > 255)
-                        totalB = 255;
-                    else if (totalB < 0)
-                        totalB = 0;*/
+                        totalB = 0;
+                        for (int x = -1, k = 0; x < panjang_kernel - 1; x++, k++)
+                        {
+                            for (int y = -1, l = 0; y < panjang_kernel - 1; y++, l++)
+                            {
+                                warna = gambar_awal.GetPixel(i + x, j + y);
+                                R = warna.R;
+                                G = warna.G;
+                                B = warna.B;
 
-                    gambar_akhir.SetPixel(i, j, Color.FromArgb(totalR, totalG, totalB));
+                                totalR += (kernel[k, l] * R);
+                                totalG += (kernel[k, l] * G);
+                                totalB += (kernel[k, l] * B);
+                            }
+                        }
+
+                        totalR /= sum_matrik;
+                        totalG /= sum_matrik;
+                        totalB /= sum_matrik;
+
+                        /*if (totalR > 255)
+                            totalR = 255;
+                        else if (totalR < 0)
+                            totalR = 0;
+                        if (totalG > 255)
+                            totalG = 255;
+                        else if (totalG < 0)
+                            totalG = 0;
+                        if (totalB > 255)
+                            totalB = 255;
+                        else if (totalB < 0)
+                            totalB = 0;*/
+
+                        gambar_akhir.SetPixel(i, j, Color.FromArgb(totalR, totalG, totalB));
+                    }
                 }
+                pictureBox2.Image = gambar_akhir;
             }
-            pictureBox2.Image = gambar_akhir;
+            else
+            {
+                MessageBox.Show("Silahkan input kernel sesuai dengan aturan Low Pass Filter!");
+            }
         }
 
         private void high_pass_filter_primitif()
