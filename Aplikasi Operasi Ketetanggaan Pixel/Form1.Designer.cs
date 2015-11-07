@@ -456,6 +456,8 @@
             // 
             // groupBox11
             // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox11.Controls.Add(this.trackBar3);
             this.groupBox11.Controls.Add(this.button7);
             this.groupBox11.Controls.Add(this.label2);
