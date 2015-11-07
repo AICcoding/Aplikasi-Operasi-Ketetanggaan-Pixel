@@ -559,6 +559,82 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         private void filter_median_primitif()
         {
             //kodene...
+            int r, g, b;
+            for (int i = 1; i < gambar_awal.Width - 1; i++)
+            {
+                for (int j = 1; j < gambar_awal.Height - 1; j++)
+                {
+                    r = cari_median(i, j, "red");
+                    g = cari_median(i, j, "green");
+                    b = cari_median(i, j, "blue");
+
+                    gambar_akhir.SetPixel(i - 1, j - 1, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Image = (Bitmap)gambar_akhir;
+        }
+
+        private int cari_median(int i, int j, String RGB)
+        {
+            int[] data = new int[9];
+            int tmp, hasil;
+            if(RGB=="red")
+            {
+                data[0] = gambar_awal.GetPixel(i, j + 1).R;
+                data[1] = gambar_awal.GetPixel(i - 1, j + 1).R;
+                data[2] = gambar_awal.GetPixel(i - 1, j).R;
+                data[3] = gambar_awal.GetPixel(i - 1, j - 1).R;
+
+                data[4] = gambar_awal.GetPixel(i, j - 1).R;
+                
+                data[5] = gambar_awal.GetPixel(i + 1, j - 1).R;
+                data[6] = gambar_awal.GetPixel(i + 1, j).R;
+                data[7] = gambar_awal.GetPixel(i + 1, j + 1).R;
+                data[8] = gambar_awal.GetPixel(i, j).R;               
+            }
+            else if (RGB == "green")
+            {
+                data[0] = gambar_awal.GetPixel(i, j + 1).G;
+                data[1] = gambar_awal.GetPixel(i - 1, j + 1).G;
+                data[2] = gambar_awal.GetPixel(i - 1, j).G;
+                data[3] = gambar_awal.GetPixel(i - 1, j - 1).G;
+
+                data[4] = gambar_awal.GetPixel(i, j - 1).G;
+
+                data[5] = gambar_awal.GetPixel(i + 1, j - 1).G;
+                data[6] = gambar_awal.GetPixel(i + 1, j).G;
+                data[7] = gambar_awal.GetPixel(i + 1, j + 1).G;
+                data[8] = gambar_awal.GetPixel(i, j).G;              
+            }
+            else if (RGB == "blue")
+            {
+                data[0] = gambar_awal.GetPixel(i, j + 1).B;
+                data[1] = gambar_awal.GetPixel(i - 1, j + 1).B;
+                data[2] = gambar_awal.GetPixel(i - 1, j).B;
+                data[3] = gambar_awal.GetPixel(i - 1, j - 1).B;
+
+                data[4] = gambar_awal.GetPixel(i, j - 1).B;
+
+                data[5] = gambar_awal.GetPixel(i + 1, j - 1).B;
+                data[6] = gambar_awal.GetPixel(i + 1, j).B;
+                data[7] = gambar_awal.GetPixel(i + 1, j + 1).B;
+                data[8] = gambar_awal.GetPixel(i, j).B;           
+            }
+
+            for (int a = 0; a < 8; a++)
+            {
+                for (int b = 0; b < 8 - a; b++)
+                {
+                    if (data[b] > data[b + 1])
+                    {
+                        tmp = data[b];
+                        data[b] = data[b + 1];
+                        data[b + 1] = tmp;
+                    }
+                }
+            }
+            hasil = data[4];
+            return hasil;
         }
 
         private void filter_batas_emgu()
