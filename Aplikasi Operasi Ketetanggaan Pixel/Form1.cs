@@ -206,6 +206,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             if (radioButton4.Checked == true)
             {
                 filter_advanced = 1;
+                kernelLowPassAwal();
                 radioButton7.Enabled = true;
                 radioButton8.Enabled = true;
             }
@@ -223,6 +224,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             if (radioButton5.Checked == true)
             {
                 filter_advanced = 2;
+                kernelHighPassAwal();
             }
         }
 
@@ -231,6 +233,7 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
             if(radioButton6.Checked==true)
             {
                 filter_advanced = 3;
+                kernelHighBoostAwal();
             }
         }
 
@@ -963,5 +966,112 @@ namespace Aplikasi_Operasi_Ketetanggaan_Pixel
         {
             textBox1.Text = Convert.ToString(trackBar3.Value);
         }        
+
+        private void kernelLowPassAwal()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+
+            int panjang;
+            panjang_kernel = 3;
+            panjang = dataGridView1.Width / panjang_kernel;
+            dataGridView1.ColumnCount = panjang_kernel;
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                var baris = new DataGridViewRow();
+                DataGridViewColumn kolom = dataGridView1.Columns[i];
+                kolom.Width = panjang;
+                dataGridView1.Rows.Add();
+            }
+
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+
+            kernel = new int[panjang_kernel, panjang_kernel];
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                for (int j = 0; j < panjang_kernel; j++)
+                {
+                    kernel[i,j] = Convert.ToInt16(dataGridView1[i, j].Value = 1);
+                }
+            }
+        }
+
+        private void kernelHighPassAwal()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+
+            int panjang;
+            panjang_kernel = 3;
+            panjang = dataGridView1.Width / panjang_kernel;
+            dataGridView1.ColumnCount = panjang_kernel;
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                var baris = new DataGridViewRow();
+                DataGridViewColumn kolom = dataGridView1.Columns[i];
+                kolom.Width = panjang;
+                dataGridView1.Rows.Add();
+            }
+
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+
+            kernel = new int[panjang_kernel, panjang_kernel];
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                for (int j = 0; j < panjang_kernel; j++)
+                {
+                    if(i==1 && j ==1)
+                    {
+                        kernel[i, j] = Convert.ToInt16(dataGridView1[i, j].Value = 8);
+                    }
+                    else
+                    {
+                        kernel[i, j] = Convert.ToInt16(dataGridView1[i, j].Value = -1);
+                    }
+                }
+            }
+        }
+
+        private void kernelHighBoostAwal()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Refresh();
+
+            int panjang;
+            panjang_kernel = 3;
+            panjang = dataGridView1.Width / panjang_kernel;
+            dataGridView1.ColumnCount = panjang_kernel;
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                var baris = new DataGridViewRow();
+                DataGridViewColumn kolom = dataGridView1.Columns[i];
+                kolom.Width = panjang;
+                dataGridView1.Rows.Add();
+            }
+
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+
+            kernel = new int[panjang_kernel, panjang_kernel];
+            for (int i = 0; i < panjang_kernel; i++)
+            {
+                for (int j = 0; j < panjang_kernel; j++)
+                {
+                    if (i == 1 && j == 1)
+                    {
+                        kernel[i, j] = Convert.ToInt16(dataGridView1[i, j].Value = 11);
+                    }
+                    else
+                    {
+                        kernel[i, j] = Convert.ToInt16(dataGridView1[i, j].Value = -1);
+                    }
+                }
+            }
+        }
     }
 }
